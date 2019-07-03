@@ -211,22 +211,30 @@ static NSTimeInterval FBSnapshotTimeout = 15.;
   if ([controller respondsToSelector:@selector(setAutocorrectionEnabled:)]) {
     controller.autocorrectionEnabled = NO;
   } else {
-    [controller setValue:@NO forPreferenceKey:FBKeyboardAutocorrectionKey];
+    if ([controller respondsToSelector:@selector(setValue:forPreferenceKey:)]) {
+      [controller setValue:@NO forPreferenceKey:FBKeyboardAutocorrectionKey];
+    }
   }
 
   // Predictive in Keyboards
   if ([controller respondsToSelector:@selector(setPredictionEnabled:)]) {
     controller.predictionEnabled = NO;
   } else {
-    [controller setValue:@NO forPreferenceKey:FBKeyboardPredictionKey];
+    if ([controller respondsToSelector:@selector(setValue:forPreferenceKey:)]) {
+      [controller setValue:@NO forPreferenceKey:FBKeyboardPredictionKey];
+    }
   }
 
   // To dismiss keyboard tutorial on iOS 11+ (iPad)
   if (isSDKVersionGreaterThanOrEqualTo(@"11.0")) {
-    [controller setValue:@YES forPreferenceKey:@"DidShowGestureKeyboardIntroduction"];
+    if ([controller respondsToSelector:@selector(setValue:forPreferenceKey:)]) {
+      [controller setValue:@YES forPreferenceKey:@"DidShowGestureKeyboardIntroduction"];
+    }
   }
   if (isSDKVersionGreaterThanOrEqualTo(@"13.0")) {
-    [controller setValue:@YES forPreferenceKey:@"DidShowContinuousPathIntroduction"];
+    if ([controller respondsToSelector:@selector(setValue:forPreferenceKey:)]) {
+      [controller setValue:@YES forPreferenceKey:@"DidShowContinuousPathIntroduction"];
+    }
   }
   [controller synchronizePreferences];
 
